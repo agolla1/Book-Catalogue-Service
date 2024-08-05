@@ -1,0 +1,17 @@
+META-INF/spring-configuration-metadata.json
+com/application/book/catalog/configuration/WebMvcConfiguration.class
+com/application/book/catalog/configuration/ApplicationProperties.class
+com/application/book/catalog/domain/BookItemRepository.class
+com/application/book/catalog/domain/ItemDto.class
+com/application/book/catalog/domain/BookItemService.class
+com/application/book/catalog/domain/BookItem.class
+com/application/book/catalog/exception/GlobalExceptionHandler.class
+com/application/book/catalog/BookCatalogServiceApplication.class
+com/application/book/catalog/domain/ProductMapper.class
+com/application/book/catalog/domain/ProductAlreadyExistsException.class
+com/application/book/catalog/configuration/CatalogueApplicationConfiguration.class
+com/application/book/catalog/data/DataInitializer.class
+com/application/book/catalog/domain/CreateProductModel.class
+com/application/book/catalog/domain/ItemPageResult.class
+com/application/book/catalog/controller/ItemController.class
+com/application/book/catalog/domain/ProductNotFoundException.class

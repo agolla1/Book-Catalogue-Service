@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.application.book.catalog.configuration.ApplicationProperties",
+      "sourceType": "com.application.book.catalog.configuration.ApplicationProperties"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

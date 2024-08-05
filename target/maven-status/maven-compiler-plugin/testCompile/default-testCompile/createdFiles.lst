@@ -1,0 +1,6 @@
+com/application/book/catalog/controller/ItemControllerTest.class
+com/application/book/catalog/BookCatalogServiceApplicationTests.class
+com/application/book/catalog/controller/ItemControllerUnitTest.class
+com/application/book/catalog/common/TestHelper.class
+com/application/book/catalog/common/AbstractIntegrationTest.class
+com/application/book/catalog/domain/BookItemServiceTest.class
