@@ -22,13 +22,13 @@ public class ItemController {
 
     @GetMapping
     public ItemPageResult<ItemDto> getProducts(@RequestParam(name = "page") int pageNo) {
-        return bookItemService.getProducts(pageNo);
+        return bookItemService.getBookItems(pageNo);
     }
 
     @GetMapping("/{code}")
     public ResponseEntity<ItemDto> getProductByCode(@PathVariable String code) {
         return bookItemService
-                .getProductByCode(code)
+                .getBookItemByCode(code)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ProductNotFoundException(code));
     }
@@ -37,19 +37,19 @@ public class ItemController {
     public ItemPageResult<ItemDto> searchProducts(
             @RequestParam(name = "query") String query,
             @RequestParam(required = false, defaultValue = "1", name = "page") int page) {
-        return bookItemService.searchProductsByCriteria(query, page);
+        return bookItemService.searchBookItemsByCriteria(query, page);
     }
 
     @PostMapping
     public ResponseEntity<ItemDto> createProduct(
             @RequestBody @Valid CreateProductModel createProductModel) {
 
-        ItemDto itemDto = bookItemService.createProduct(createProductModel);
+        ItemDto itemDto = bookItemService.createBookItem(createProductModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(itemDto);
     }
 
     @DeleteMapping("/{code}")
     public void deleteProduct(@PathVariable String code) {
-        bookItemService.deleteProduct(code);
+        bookItemService.deleteBookItem(code);
     }
 }

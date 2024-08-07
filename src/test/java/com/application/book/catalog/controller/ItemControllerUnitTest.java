@@ -61,18 +61,18 @@ public class ItemControllerUnitTest {
     }
 
     private void mockServiceToReturnEmptyPage() {
-        when(bookItemService.searchProductsByCriteria(anyString(), anyInt()))
+        when(bookItemService.searchBookItemsByCriteria(anyString(), anyInt()))
                 .thenReturn(ItemPageResult.fromPage(TestHelper.emptyPageOfProductModel()));
     }
 
     private void verifyMockCallForSearchProducts(int times) {
-        verify(bookItemService, times(times)).searchProductsByCriteria(anyString(), anyInt());
+        verify(bookItemService, times(times)).searchBookItemsByCriteria(anyString(), anyInt());
     }
 
     @Test
     public void testDeleteProduct_whenProductExists_shouldReturnDeletedProduct() throws Exception {
         String code = "P109";
-        doNothing().when(bookItemService).deleteProduct(code);
+        doNothing().when(bookItemService).deleteBookItem(code);
 
         mockMvc.perform(delete("/api/products/" + code).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -84,7 +84,7 @@ public class ItemControllerUnitTest {
         String code = "P1090";
         doThrow(new ProductNotFoundException("Product with code:" + code + "not found"))
                 .when(bookItemService)
-                .deleteProduct(code);
+                .deleteBookItem(code);
 
         mockMvc.perform(delete("/api/products/" + code).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(

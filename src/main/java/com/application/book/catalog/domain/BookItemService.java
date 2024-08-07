@@ -21,7 +21,7 @@ public class BookItemService {
      * @param pageNo
      * @return
      */
-    public ItemPageResult<ItemDto> getProducts(int pageNo) {
+    public ItemPageResult<ItemDto> getBookItems(int pageNo) {
         int page = pageNo <= 1 ? 0 : pageNo - 1;
         Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.Direction.ASC, "name");
         Page<ItemDto> productsPage =
@@ -33,7 +33,7 @@ public class BookItemService {
      * @param pageNo
      * @return
      */
-    private int getRepositoryPageNo(int pageNo) {
+    private int getBookItemRepoPageNo(int pageNo) {
         return pageNo <= 1 ? 0 : pageNo - 1;
     }
 
@@ -41,7 +41,7 @@ public class BookItemService {
      * @param code
      * @return
      */
-    public Optional<ItemDto> getProductByCode(String code) {
+    public Optional<ItemDto> getBookItemByCode(String code) {
         return bookItemRepository.findByCode(code).map(productMapper::toModel);
     }
 
@@ -50,12 +50,12 @@ public class BookItemService {
      * @param page
      * @return
      */
-    public ItemPageResult<ItemDto> searchProductsByCriteria(String searchCriteria, int page) {
+    public ItemPageResult<ItemDto> searchBookItemsByCriteria(String searchCriteria, int page) {
         Page<ItemDto> productPage =
                 bookItemRepository
                         .findAllBy(
-                                textCriteriaMatching(searchCriteria),
-                                pageableSortOf(getRepositoryPageNo(page)))
+                                matchingPhrase(searchCriteria),
+                                pageableOf(getBookItemRepoPageNo(page)))
                         .map(productMapper::toModel);
         return ItemPageResult.fromPage(productPage);
     }
@@ -64,7 +64,7 @@ public class BookItemService {
      * @param searchCriteria
      * @return
      */
-    private TextCriteria textCriteriaMatching(String searchCriteria) {
+    private TextCriteria matchingPhrase(String searchCriteria) {
         return new TextCriteria().matchingPhrase(searchCriteria);
     }
 
@@ -72,7 +72,7 @@ public class BookItemService {
      * @param page
      * @return
      */
-    private Pageable pageableSortOf(int page) {
+    private Pageable pageableOf(int page) {
         return PageRequest.of(page, PAGE_SIZE, Sort.Direction.ASC, "name");
     }
 
@@ -80,19 +80,19 @@ public class BookItemService {
      * @param createProductModel
      * @return
      */
-    public ItemDto createProduct(CreateProductModel createProductModel) {
+    public ItemDto createBookItem(CreateProductModel createProductModel) {
         boolean existsProductByCode =
                 bookItemRepository.existsProductByCode(createProductModel.code());
         if (existsProductByCode) {
-            throw new ProductAlreadyExistsException(createProductModel.code());
+            throw new BookItemAlreadyExistsException(createProductModel.code());
         }
-        BookItem bookItem = productMapper.fromCreateProductModel(createProductModel);
+        BookItem bookItem = productMapper.fromCreateBookItemModel(createProductModel);
         BookItem savedBookItem = bookItemRepository.save(bookItem);
         return productMapper.toModel(savedBookItem);
     }
 
     /** @param code */
-    public void deleteProduct(String code) {
+    public void deleteBookItem(String code) {
         BookItem bookItem =
                 bookItemRepository
                         .findByCode(code)

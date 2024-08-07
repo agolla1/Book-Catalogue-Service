@@ -39,7 +39,7 @@ public class BookItemServiceTest {
         when(bookItemRepository.findAllBy(any(TextCriteria.class), any(Pageable.class)))
                 .thenReturn(TestHelper.emptyPageOfProduct());
         ItemPageResult<ItemDto> actualPage =
-                bookItemService.searchProductsByCriteria("search text", 1);
+                bookItemService.searchBookItemsByCriteria("search text", 1);
 
         assertThat(actualPage).isNotNull();
         assertThat(actualPage.data().isEmpty()).isTrue();
@@ -68,7 +68,7 @@ public class BookItemServiceTest {
                         expectedProductModels.getContent().get(0),
                         expectedProductModels.getContent().get(1));
 
-        ItemPageResult<ItemDto> actualPage = bookItemService.searchProductsByCriteria("Dog", 1);
+        ItemPageResult<ItemDto> actualPage = bookItemService.searchBookItemsByCriteria("Dog", 1);
 
         assertThat(actualPage).isNotNull();
         assertThat(actualPage.data().isEmpty()).isFalse();
@@ -86,13 +86,13 @@ public class BookItemServiceTest {
     }
 
     @Test
-    public void testDeleteProduct_whenProductExists_shouldReturnDeletedProduct() {
+    public void testDeleteProduct_whenProductExists_shouldReturnDeletedBookItem() {
         String code = "P109";
-        BookItem bookItem = createProduct(code);
+        BookItem bookItem = createBookItem(code);
         when(bookItemRepository.findByCode(code)).thenReturn(Optional.of(bookItem));
         when(bookItemRepository.save(bookItem)).thenReturn(Optional.of(bookItem).get());
 
-        bookItemService.deleteProduct(code);
+        bookItemService.deleteBookItem(code);
 
         Optional<BookItem> deletedProduct = bookItemRepository.findByCode(code);
 
@@ -102,18 +102,18 @@ public class BookItemServiceTest {
     }
 
     @Test
-    public void testDeleteProduct_whenProductDoesNotExist_shouldThrowProductNotFoundException() {
+    public void testDeleteProduct_whenProductDoesNotExist_shouldThrowBookItemNotFoundException() {
         String code = "P1090";
         when(bookItemRepository.findByCode(code)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(
                 ProductNotFoundException.class,
                 () -> {
-                    bookItemService.deleteProduct(code);
+                    bookItemService.deleteBookItem(code);
                 });
     }
 
-    private BookItem createProduct(String code) {
+    private BookItem createBookItem(String code) {
         return new BookItem(
                 null,
                 code,

@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
 
-public class ProductAlreadyExistsException extends ErrorResponseException {
+public class BookItemAlreadyExistsException extends ErrorResponseException {
 
-    public ProductAlreadyExistsException(String code) {
+    public BookItemAlreadyExistsException(String code) {
         super(
                 HttpStatus.BAD_REQUEST,
                 asProblemDetail("Product with code '" + code + "' already exist"),

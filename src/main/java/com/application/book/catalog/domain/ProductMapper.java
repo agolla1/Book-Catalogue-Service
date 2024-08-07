@@ -22,7 +22,7 @@ public class ProductMapper {
                 bookItem.getPrice().subtract(discount));
     }
 
-    public BookItem fromCreateProductModel(CreateProductModel createProductModel) {
+    public BookItem fromCreateBookItemModel(CreateProductModel createProductModel) {
         return new BookItem(
                 null,
                 createProductModel.code(),
